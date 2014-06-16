@@ -2,6 +2,10 @@
 
 A Clojure library designed to let jdbc talk the PostgresSQL json type.
 
+## Install
+
+`[postgre-types "0.0.1"]`
+
 ## Usage
 
 ```clojure
