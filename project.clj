@@ -1,4 +1,4 @@
-(defproject postgre-types "0.0.1"
+(defproject postgre-types "0.0.2"
   :description "Integration with PostgresSQL multiple types"
   :url "https://github.com/siscia/postgres-type"
   :license {:name "Eclipse Public License"

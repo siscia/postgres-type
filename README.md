@@ -1,11 +1,13 @@
-# postre-types
+# postgre-types
 
 A Clojure library designed to let jdbc talk the PostgresSQL json type.
 
 ## Install
 
+[![Clojars Project](http://clojars.org/postgre-types/latest-version.svg)](http://clojars.org/postgre-types)
+
 ```
-[postgre-types "0.0.1"]
+[postgre-types "0.0.2"]
 ```
 
 ## Usage
