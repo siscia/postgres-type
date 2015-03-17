@@ -7,8 +7,8 @@
 (def db-spec {:classname "org.postgresql.Driver"
               :subprotocol "postgresql"
               :subname "//localhost:5432/test"
-              :username ""
-              :password ""})
+              :user "test"
+              :password "test"})
 
 (add-json-type generate-string parse-string)
 
