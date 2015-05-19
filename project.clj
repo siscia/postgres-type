@@ -1,4 +1,4 @@
-(defproject postgre-types "0.0.3"
+(defproject postgre-types "0.0.4"
   :description "Integration with PostgresSQL multiple types"
   :url "https://github.com/siscia/postgres-type"
   :license {:name "Eclipse Public License"
@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/java.jdbc "0.3.6"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]]
+  :repositories [["release" "https://clojars.org/siscia"]]
   :profiles {:dev {:dependencies [[cheshire "5.3.1"]]}})
