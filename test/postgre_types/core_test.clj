@@ -10,7 +10,6 @@
               :user "test"
               :password "test"})
 
-
 (deftest test-values-in-db
   
   (add-json-type generate-string parse-string)
@@ -45,3 +44,11 @@
   
   (j/db-do-commands db-spec
                     (j/drop-table-ddl :test)))
+
+(deftest test-assertion-safeness
+  (testing "json"
+    (is (thrown? AssertionError (add-json-type "foo" (fn [_] _))))
+    (is (thrown? AssertionError (add-json-type (fn [_] _) "bar"))))
+  (testing "jsonb"
+    (is (thrown? AssertionError (add-jsonb-type "foo" (fn [_] _))))
+    (is (thrown? AssertionError (add-jsonb-type (fn [_] _) "bar")))))
