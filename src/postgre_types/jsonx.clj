@@ -8,13 +8,17 @@
 
 
 (ns ^{:author "Simone Mosciatti"}
-  postgre-types.json
+  postgre-types.jsonx
   (:require [clojure.java.jdbc :as jdbc])
   (:import org.postgresql.util.PGobject))
 
-(defn add-json-type [write-json read-json]
+
+(defn- add-jsonx-type [jsonx write-json read-json]
+  {:pre [(or (= "json" jsonx) (= "jsonb" jsonx))
+         (fn? write-json)
+         (fn? read-json)]}
   (let [to-pgjson (fn [value] (doto  (PGobject.)
-                                (.setType "json")
+                                (.setType jsonx)
                                 (.setValue (write-json value))))]
 
     (extend-protocol jdbc/ISQLValue
@@ -28,26 +32,10 @@
       (result-set-read-column [pgobj _metadata _index]
         (let [type  (.getType pgobj)
               value (.getValue pgobj)]
-          (case type
-            "json" (read-json value)
-            :else value))))))
+          (if (= type jsonx)
+            (read-json value)
+            value))))))
 
-(defn add-jsonb-type [write-json read-json]
-  (let [to-pgjson (fn [value] (doto  (PGobject.)
-                                (.setType "jsonb")
-                                (.setValue (write-json value))))]
+(def add-json-type (partial add-jsonx-type "json"))
 
-    (extend-protocol jdbc/ISQLValue
-      clojure.lang.IPersistentMap
-      (sql-value [value] (to-pgjson value))
-      clojure.lang.IPersistentVector
-      (sql-value [value] (to-pgjson value)))
-
-    (extend-protocol jdbc/IResultSetReadColumn
-      PGobject
-      (result-set-read-column [pgobj _metadata _index]
-        (let [type  (.getType pgobj)
-              value (.getValue pgobj)]
-          (case type
-            "jsonb" (read-json value)
-            :else value))))))
+(def add-jsonb-type (partial add-jsonx-type "jsonb"))
