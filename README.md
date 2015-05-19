@@ -7,7 +7,7 @@ A Clojure library designed to let jdbc talk the PostgresSQL json type.
 [![Clojars Project](http://clojars.org/postgre-types/latest-version.svg)](http://clojars.org/postgre-types)
 
 ```
-[postgre-types "0.0.2"]
+[postgre-types "0.0.3"] STABLE
 ```
 
 ## Usage
@@ -18,7 +18,19 @@ A Clojure library designed to let jdbc talk the PostgresSQL json type.
 
 (add-json-type f-write-json f-read-json)
 
-;; from now on jdbc know how to deal with the PostgreSQL json type.
+;; from now on jdbc knows how to deal with the PostgreSQL json type.
+
+```
+
+You can also add `jsonb` with the same interface.
+
+```clojure
+(ns your-namespace.foo
+    (:require postgre-types.json :refer [add-jsonb-type]))
+
+(add-jsonb-type f-write-json f-read-json)
+
+;; from now on jdbc knows how to deal with the PostgreSQL jsonb type.
 
 ```
 
@@ -50,7 +62,7 @@ Please note that the comand `sudo -u postgres createuser test -d -P ` is pretty 
 
 ## License
 
-Copyright © 2014 by Simone Mosciatti
+Copyright © 2015 by Simone Mosciatti
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
