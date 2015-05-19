@@ -31,3 +31,23 @@
           (case type
             "json" (read-json value)
             :else value))))))
+
+(defn add-jsonb-type [write-json read-json]
+  (let [to-pgjson (fn [value] (doto  (PGobject.)
+                                (.setType "jsonb")
+                                (.setValue (write-json value))))]
+
+    (extend-protocol jdbc/ISQLValue
+      clojure.lang.IPersistentMap
+      (sql-value [value] (to-pgjson value))
+      clojure.lang.IPersistentVector
+      (sql-value [value] (to-pgjson value)))
+
+    (extend-protocol jdbc/IResultSetReadColumn
+      PGobject
+      (result-set-read-column [pgobj _metadata _index]
+        (let [type  (.getType pgobj)
+              value (.getValue pgobj)]
+          (case type
+            "jsonb" (read-json value)
+            :else value))))))
