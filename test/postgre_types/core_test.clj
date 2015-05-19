@@ -26,3 +26,18 @@
   
   (j/db-do-commands db-spec
                     (j/drop-table-ddl :test)))
+
+
+(deftest test-jsonb
+  (j/db-do-commands db-spec
+                    (j/create-table-ddl :test
+                                        [:data "jsonb"]))
+  (j/insert! db-spec :test {:data {:foo :bar}})
+
+  (testing "presence of data"
+      (let [data (j/query db-spec "SELECT data FROM test")]
+        (is (= data
+               '({:data {"foo" "bar"}})))))
+  
+  (j/db-do-commands db-spec
+                    (j/drop-table-ddl :test)))
