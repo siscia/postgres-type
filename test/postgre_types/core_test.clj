@@ -1,7 +1,7 @@
 (ns postgre-types.core-test
   (:require [clojure.test :refer :all]
             [clojure.java.jdbc :as j]
-            [postgre-types.json :refer [add-json-type]]
+            [postgre-types.json :refer [add-json-type add-jsonb-type]]
             [cheshire.core :refer [generate-string parse-string]]))
 
 (def db-spec {:classname "org.postgresql.Driver"
@@ -10,34 +10,38 @@
               :user "test"
               :password "test"})
 
-(add-json-type generate-string parse-string)
-
 
 (deftest test-values-in-db
+  
+  (add-json-type generate-string parse-string)
+
   (j/db-do-commands db-spec
                     (j/create-table-ddl :test
                                         [:data "json"]))
   (j/insert! db-spec :test {:data {:foo :bar}})
 
   (testing "presence of data"
-      (let [data (j/query db-spec "SELECT data FROM test")]
-        (is (= data
-               '({:data {"foo" "bar"}})))))
+    (let [data (j/query db-spec "SELECT data FROM test")]
+      (is (= data
+             '({:data {"foo" "bar"}})))))
   
   (j/db-do-commands db-spec
                     (j/drop-table-ddl :test)))
 
 
 (deftest test-jsonb
+
+  (add-jsonb-type generate-string parse-string)
+  
   (j/db-do-commands db-spec
                     (j/create-table-ddl :test
                                         [:data "jsonb"]))
   (j/insert! db-spec :test {:data {:foo :bar}})
 
   (testing "presence of data"
-      (let [data (j/query db-spec "SELECT data FROM test")]
-        (is (= data
-               '({:data {"foo" "bar"}})))))
+    (let [data (j/query db-spec "SELECT data FROM test")]
+      (is (= data
+             '({:data {"foo" "bar"}})))))
   
   (j/db-do-commands db-spec
                     (j/drop-table-ddl :test)))
