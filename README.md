@@ -6,15 +6,11 @@ A Clojure library designed to let jdbc talk the PostgresSQL json type.
 
 [![Clojars Project](http://clojars.org/postgre-types/latest-version.svg)](http://clojars.org/postgre-types)
 
-```
-[postgre-types "0.0.3"] STABLE
-```
-
 ## Usage
 
 ```clojure
 (ns your-namespace.foo
-    (:require postgre-types.json :refer [add-json-type]))
+    (:require [postgre-types.json :refer [add-json-type]]))
 
 (add-json-type f-write-json f-read-json)
 
