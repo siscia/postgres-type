@@ -22,7 +22,7 @@ You can also add `jsonb` with the same interface.
 
 ```clojure
 (ns your-namespace.foo
-    (:require postgre-types.json :refer [add-jsonb-type]))
+    (:require [postgre-types.json :refer [add-jsonb-type]]))
 
 (add-jsonb-type f-write-json f-read-json)
 
