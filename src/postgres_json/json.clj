@@ -8,7 +8,7 @@
 
 
 (ns ^{:author "Simone Mosciatti"}
-  postgre-types.json
+  postgres-json.json
   (:require [clojure.java.jdbc :as jdbc])
   (:import org.postgresql.util.PGobject))
 

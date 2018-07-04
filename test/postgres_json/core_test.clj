@@ -1,7 +1,7 @@
-(ns postgre-types.core-test
+(ns postgres-json.core-test
   (:require [clojure.test :refer :all]
             [clojure.java.jdbc :as j]
-            [postgre-types.json :refer [add-json-type add-jsonb-type]]
+            [postgres-json.json :refer [add-json-type add-jsonb-type]]
             [cheshire.core :refer [generate-string parse-string]]))
 
 (def db-spec {:classname "org.postgresql.Driver"
