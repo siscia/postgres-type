@@ -1,4 +1,4 @@
-# postgre-types
+# postgres-json
 
 A Clojure library designed to let jdbc talk the PostgresSQL json type.
 
@@ -36,6 +36,17 @@ The first (f-write-json) is the function that providden the data structure retur
 
 Practical examples of such structure could be `cheshire.core/generate-string` and `cheshire.core/parse-string` or also `clj-json.core/generate-string` and `clj-json.core/parse-string` or also `clojure.data.json/write-str` and `clojure.data.json/read-str`.
 
+``` clojure
+(ns your-namespace.foo
+  (:require 
+	[postgre-types.json :refer [add-json-type add-jsonb-type]]
+	[clojure.data.json :as json]))
+
+;; ...	
+
+(add-json-type json/write-str json/read-str)
+```
+
 Very basic example is providen in the test.
 
 ## Test
@@ -60,5 +71,4 @@ Please note that the comand `sudo -u postgres createuser test -d -P ` is pretty 
 
 Copyright © 2015 by Simone Mosciatti
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
